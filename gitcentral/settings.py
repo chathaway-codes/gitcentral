@@ -123,4 +123,9 @@ STATIC_URL = '/static/'
 
 # App settings
 GIT_ROOT = os.path.join(BASE_DIR, 'repos')
+GIT_SERVER_PORT = 5022
 
+# We at least need public and private keys
+from local_settings import *
+a = SERVER_PUBLIC_KEY
+a = SERVER_PRIVATE_KEY

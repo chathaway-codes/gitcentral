@@ -9,8 +9,10 @@ import tty
 
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import PermissionDenied
 from django.core.management.base import BaseCommand, CommandError
 from django.contrib.auth.models import User
+from django.http import HttpResponse
 
 from twisted.cred import portal
 from twisted.conch import avatar
@@ -49,6 +51,9 @@ class GitSession(SSHSessionForUnixConchUser):
 	if repo.user_can_read(User.objects.get(username=self.avatar.username)):
 		# This will raise an exception if the user doesn't have permission to read
 		pass
+	# If the user is writing, verify they can
+	if cmd == "git-receive-pack" and not repo.user_can_write(User.objects.get(username=self.avatar.username)):
+		raise PermissionDenied()
 	path = Repo.get_repo_path(repo)
         command = (cmd, path)
         peer = self.avatar.conn.transport.transport.getPeer()
@@ -90,19 +95,20 @@ class GitSSHFactory(factory.SSHFactory):
         'ssh-connection': connection.SSHConnection
     }
 
+class DjangoSSHKeyDB(object):
+    def getAuthorizedKeys(self, username):
+        k = Key.objects.filter(owner__username=username)
+	return map(lambda a: keys.Key.fromString(data=a.key), k)
+
 components.registerAdapter(GitSession, GitAvatar, session.ISession)
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
 	p = portal.Portal(GitRealm())
 	users = {}
-	for key in Key.objects.all():
-		if key.owner.username not in users:
-		    users[key.owner.username] = []
-		users[key.owner.username] += [keys.Key.fromString(data=key.key)]
-	sshDB = SSHPublicKeyChecker(InMemorySSHKeyDB(users))
+	sshDB = SSHPublicKeyChecker(DjangoSSHKeyDB())
 	p.registerChecker(sshDB)
 	GitSSHFactory.portal = p
 
-	reactor.listenTCP(5022, GitSSHFactory())
+	reactor.listenTCP(settings.GIT_SERVER_PORT, GitSSHFactory())
 	reactor.run()

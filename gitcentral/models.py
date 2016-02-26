@@ -17,6 +17,10 @@ class Key(models.Model):
     key = models.TextField()
     owner = models.ForeignKey(AUTH_USER_MODEL)
 
+    def __unicode__(self):
+    	t = self.key.split(" ", 3)
+	return "%s %s... %s" % (t[0], t[1][0:10], t[2])
+
 class RepoPermission(models.Model):
     owner = models.ForeignKey(AUTH_USER_MODEL)
     repo = models.ForeignKey('gitcentral.Repo')
@@ -41,6 +45,10 @@ class Repo(models.Model):
 	    return True
 	get_object_or_404(RepoPermission, owner=user, repo=self)
 	return True
+
+    def user_can_write(self, user):
+	rp = get_object_or_404(RepoPermission, owner=user, repo=self)
+	return rp.permission > 0
 
     @staticmethod
     def get_repo_path(repo):

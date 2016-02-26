@@ -24,4 +24,8 @@ urlpatterns = [
     url(r'^repo/create/$', RepoCreateView.as_view(), name="repo-create"),
     url(r'^repo/(?P<username>\w+)/$', RepoListView.as_view(), name="user-repo-list"),
     url(r'^repo/(?P<username>\w+)/(?P<path>[\w-]+)/(?P<dirfile>.*)$', RepoDetailView.as_view(), name="repo-detail"),
+
+    url(r'^key/(?P<pk>\d+)/delete$', KeyDeleteView.as_view(), name="key-delete"),
+    url(r'^key/create/$', KeyCreateView.as_view(), name="key-create"),
+    url(r'^key/$', KeyListView.as_view(), name="key-list"),
 ]

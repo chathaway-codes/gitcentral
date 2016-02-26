@@ -6,6 +6,7 @@
 		    {% if user.is_authenticated %}
 			<li><a href="{% url "repo-create" %}">Create Repo</a></li>
 			<li><a href="{% url "user-repo-list" username=user.username %}">My Repos</a></li>
+			<li><a href="{% url "key-list" %}">My Keys</a></li>
 		    {% endif %}
 		    </ul>
 		</nav>
