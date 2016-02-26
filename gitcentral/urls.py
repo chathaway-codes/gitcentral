@@ -16,6 +16,12 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
+from .views import *
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^repo/$', AllRepoListView.as_view(), name="repo-list"),
+    url(r'^repo/create/$', RepoCreateView.as_view(), name="repo-create"),
+    url(r'^repo/(?P<username>\w+)/$', RepoListView.as_view(), name="user-repo-list"),
+    url(r'^repo/(?P<username>\w+)/(?P<path>[\w-]+)/(?P<dirfile>.*)$', RepoDetailView.as_view(), name="repo-detail"),
 ]

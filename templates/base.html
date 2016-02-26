@@ -1,0 +1,14 @@
+<html>
+	<body>
+		<nav>
+		    <ul>
+			<li><a href="{% url "repo-list" %}">All repos</a>
+		    {% if user.is_authenticated %}
+			<li><a href="{% url "repo-create" %}">Create Repo</a></li>
+			<li><a href="{% url "user-repo-list" username=user.username %}">My Repos</a></li>
+		    {% endif %}
+		    </ul>
+		</nav>
+		{% block body %}{% endblock %}
+	</body>
+</html>

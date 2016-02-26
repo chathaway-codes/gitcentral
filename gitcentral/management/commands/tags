@@ -1,0 +1,54 @@
+!_TAG_FILE_SORTED	2	/0=unsorted, 1=sorted, 2=foldcase/
+avatar	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^from twisted.conch import avatar$/;"	i	language:Python
+BaseCommand	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^from django.core.management.base import BaseCommand, CommandError$/;"	i	language:Python
+Command	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^class Command(BaseCommand):$/;"	c	language:Python
+CommandError	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^from django.core.management.base import BaseCommand, CommandError$/;"	i	language:Python
+components	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^from twisted.python import log, components$/;"	i	language:Python
+connection	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^from twisted.conch.ssh import factory, userauth, connection, keys, session$/;"	i	language:Python
+execCommand	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^    def execCommand(self, proto, cmd):$/;"	m	language:Python	class:GitSession
+factory	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^from twisted.conch.ssh import factory, userauth, connection, keys, session$/;"	i	language:Python
+fcntl	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^import fcntl$/;"	i	language:Python
+GitAvatar	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^class GitAvatar(avatar.ConchUser):$/;"	c	language:Python
+GitRealm	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^class GitRealm:$/;"	c	language:Python
+GitSession	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^class GitSession(SSHSessionForUnixConchUser):$/;"	c	language:Python
+GitSSHFactory	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^class GitSSHFactory(factory.SSHFactory):$/;"	c	language:Python
+handle	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^    def handle(self, *args, **options):$/;"	m	language:Python	class:Command
+implements	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^from zope.interface import implements$/;"	i	language:Python
+InMemorySSHKeyDB	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^from twisted.conch.checkers import SSHPublicKeyChecker, InMemorySSHKeyDB$/;"	i	language:Python
+InMemoryUsernamePasswordDatabaseDontUse	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^from twisted.cred.checkers import InMemoryUsernamePasswordDatabaseDontUse$/;"	i	language:Python
+Key	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^from gitcentral.models import Key, Repo$/;"	i	language:Python
+keys	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^from twisted.conch.ssh import factory, userauth, connection, keys, session$/;"	i	language:Python
+log	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^from twisted.python import log, components$/;"	i	language:Python
+ObjectDoesNotExist	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^from django.core.exceptions import ObjectDoesNotExist$/;"	i	language:Python
+openShell	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^    def openShell(self, proto):$/;"	m	language:Python	class:GitSession
+os	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^import os$/;"	i	language:Python
+p	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^	p = portal.Portal(GitRealm())$/;"	v	language:Python	class:Command
+path	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^	path = path.replace("'", "")$/;"	v	language:Python	class:GitSession
+path	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^	path = path[1:]$/;"	v	language:Python	class:GitSession
+path	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^	path = Repo.get_repo_path(repo)$/;"	v	language:Python	class:GitSession
+portal	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^from twisted.cred import portal$/;"	i	language:Python
+privateKeys	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^    privateKeys = {$/;"	v	language:Python	class:GitSSHFactory
+protocol	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^from twisted.internet import reactor, protocol$/;"	i	language:Python
+pty	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^import pty$/;"	i	language:Python
+publicKeys	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^    publicKeys = {$/;"	v	language:Python	class:GitSSHFactory
+reactor	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^from twisted.internet import reactor, protocol$/;"	i	language:Python
+repo	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^	repo = Repo.objects.get(path=path, owner=repo_owner)$/;"	v	language:Python	class:GitSession
+Repo	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^from gitcentral.models import Key, Repo$/;"	i	language:Python
+repo_owner	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^	repo_owner = User.objects.get(username=repo_username)$/;"	v	language:Python	class:GitSession
+requestAvatar	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^    def requestAvatar(self, avatarId, mind, *interfaces):$/;"	m	language:Python	class:GitRealm
+services	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^    services = {$/;"	v	language:Python	class:GitSSHFactory
+session	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^from twisted.conch.ssh import factory, userauth, connection, keys, session$/;"	i	language:Python
+settings	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^from django.conf import settings$/;"	i	language:Python
+shell	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^	shell = '\/usr\/bin\/git-shell'$/;"	v	language:Python	class:GitSession
+socket	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^import socket$/;"	i	language:Python
+sshDB	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^	sshDB = SSHPublicKeyChecker(InMemorySSHKeyDB(users))$/;"	v	language:Python	class:Command
+SSHPublicKeyChecker	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^from twisted.conch.checkers import SSHPublicKeyChecker, InMemorySSHKeyDB$/;"	i	language:Python
+SSHSessionForUnixConchUser	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^from twisted.conch.unix import SSHSessionForUnixConchUser$/;"	i	language:Python
+struct	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^import struct$/;"	i	language:Python
+sys	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^import sys$/;"	i	language:Python
+time	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^import time$/;"	i	language:Python
+tty	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^import tty$/;"	i	language:Python
+User	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^from django.contrib.auth.models import User$/;"	i	language:Python
+userauth	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^from twisted.conch.ssh import factory, userauth, connection, keys, session$/;"	i	language:Python
+users	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^	users = {}$/;"	v	language:Python	class:Command
+__init__	/home/charles/Programming/gitcentral/gitcentral/management/commands/git_server.py	/^    def __init__(self, username):$/;"	m	language:Python	class:GitAvatar

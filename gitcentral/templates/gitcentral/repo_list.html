@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block body %}
+<ul>
+{% for repo in object_list %}
+    <li>
+    <a href="{% url "repo-detail" username=repo.owner.username path=repo.path dirfile="" %}">{{ repo.name }}</a>
+	    <span>{% include 'gitcentral/_repo_clone.html' %}</span>
+    </li>
+{% endfor %}
+</ul>
+{% endblock %}

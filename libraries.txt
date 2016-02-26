@@ -1,4 +1,5 @@
 django
+gitpython
 pyasn1
 pycrypto
 Twisted

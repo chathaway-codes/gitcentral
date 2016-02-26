@@ -1,4 +1,8 @@
 *.swp
 *.pyc
+*.sqlite3
+local_settings.py
+repos/
 python/
+
 

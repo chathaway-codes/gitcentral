@@ -1,0 +1,76 @@
+!_TAG_FILE_SORTED	2	/0=unsorted, 1=sorted, 2=foldcase/
+admin	/home/charles/Programming/gitcentral/gitcentral/admin.py	/^from django.contrib import admin$/;"	i	language:Python
+admin	/home/charles/Programming/gitcentral/gitcentral/urls.py	/^from django.contrib import admin$/;"	i	language:Python
+ALLOWED_HOSTS	/home/charles/Programming/gitcentral/gitcentral/settings.py	/^ALLOWED_HOSTS = []$/;"	v	language:Python
+AllRepoListView	/home/charles/Programming/gitcentral/gitcentral/views.py	/^class AllRepoListView(ListView):$/;"	c	language:Python
+AUTH_PASSWORD_VALIDATORS	/home/charles/Programming/gitcentral/gitcentral/settings.py	/^AUTH_PASSWORD_VALIDATORS = [$/;"	v	language:Python
+AUTH_USER_MODEL	/home/charles/Programming/gitcentral/gitcentral/models.py	/^AUTH_USER_MODEL = getattr(settings, 'AUTH_USER_MODEL', 'auth.User')$/;"	v	language:Python
+BASE_DIR	/home/charles/Programming/gitcentral/gitcentral/settings.py	/^BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))$/;"	v	language:Python
+CreateView	/home/charles/Programming/gitcentral/gitcentral/views.py	/^from django.views.generic.edit import UpdateView, CreateView$/;"	i	language:Python
+DATABASES	/home/charles/Programming/gitcentral/gitcentral/settings.py	/^DATABASES = {$/;"	v	language:Python
+DEBUG	/home/charles/Programming/gitcentral/gitcentral/settings.py	/^DEBUG = True$/;"	v	language:Python
+DetailView	/home/charles/Programming/gitcentral/gitcentral/views.py	/^from django.views.generic import ListView, DetailView$/;"	i	language:Python
+fields	/home/charles/Programming/gitcentral/gitcentral/views.py	/^    fields = ('name', 'public',)$/;"	v	language:Python	class:RepoCreateView
+form_valid	/home/charles/Programming/gitcentral/gitcentral/views.py	/^    def form_valid(self, form):$/;"	m	language:Python	class:RepoCreateView
+get_object	/home/charles/Programming/gitcentral/gitcentral/views.py	/^	def get_object(self):$/;"	m	language:Python	class:RepoDetailView
+get_object_or_404	/home/charles/Programming/gitcentral/gitcentral/models.py	/^from django.shortcuts import get_object_or_404$/;"	i	language:Python
+get_object_or_404	/home/charles/Programming/gitcentral/gitcentral/views.py	/^from django.shortcuts import render, get_object_or_404$/;"	i	language:Python
+get_queryset	/home/charles/Programming/gitcentral/gitcentral/views.py	/^    def get_queryset(self):$/;"	m	language:Python	class:AllRepoListView
+get_queryset	/home/charles/Programming/gitcentral/gitcentral/views.py	/^    def get_queryset(self):$/;"	m	language:Python	class:RepoListView
+get_relative_path	/home/charles/Programming/gitcentral/gitcentral/models.py	/^    def get_relative_path(self):$/;"	m	language:Python	class:Repo
+get_repo_path	/home/charles/Programming/gitcentral/gitcentral/models.py	/^    def get_repo_path(repo):$/;"	m	language:Python	class:Repo
+get_success_url	/home/charles/Programming/gitcentral/gitcentral/views.py	/^    def get_success_url(self):$/;"	m	language:Python	class:RepoCreateView
+git	/home/charles/Programming/gitcentral/gitcentral/models.py	/^import git$/;"	i	language:Python
+GIT_ROOT	/home/charles/Programming/gitcentral/gitcentral/settings.py	/^GIT_ROOT = os.path.join(BASE_DIR, 'repos')$/;"	v	language:Python
+INSTALLED_APPS	/home/charles/Programming/gitcentral/gitcentral/settings.py	/^INSTALLED_APPS = [$/;"	v	language:Python
+key	/home/charles/Programming/gitcentral/gitcentral/models.py	/^    key = models.TextField()$/;"	v	language:Python	class:Key
+Key	/home/charles/Programming/gitcentral/gitcentral/models.py	/^class Key(models.Model):$/;"	c	language:Python
+LANGUAGE_CODE	/home/charles/Programming/gitcentral/gitcentral/settings.py	/^LANGUAGE_CODE = 'en-us'$/;"	v	language:Python
+ListView	/home/charles/Programming/gitcentral/gitcentral/views.py	/^from django.views.generic import ListView, DetailView$/;"	i	language:Python
+MIDDLEWARE_CLASSES	/home/charles/Programming/gitcentral/gitcentral/settings.py	/^MIDDLEWARE_CLASSES = [$/;"	v	language:Python
+model	/home/charles/Programming/gitcentral/gitcentral/views.py	/^	model = Repo$/;"	v	language:Python	class:RepoDetailView
+model	/home/charles/Programming/gitcentral/gitcentral/views.py	/^    model = Repo$/;"	v	language:Python	class:AllRepoListView
+model	/home/charles/Programming/gitcentral/gitcentral/views.py	/^    model = Repo$/;"	v	language:Python	class:RepoCreateView
+model	/home/charles/Programming/gitcentral/gitcentral/views.py	/^    model = Repo$/;"	v	language:Python	class:RepoListView
+models	/home/charles/Programming/gitcentral/gitcentral/models.py	/^from django.db import models$/;"	i	language:Python
+name	/home/charles/Programming/gitcentral/gitcentral/models.py	/^    name = models.CharField(max_length=255)$/;"	v	language:Python	class:Repo
+os	/home/charles/Programming/gitcentral/gitcentral/models.py	/^import os$/;"	i	language:Python
+os	/home/charles/Programming/gitcentral/gitcentral/settings.py	/^import os$/;"	i	language:Python
+owner	/home/charles/Programming/gitcentral/gitcentral/models.py	/^    owner = models.ForeignKey(AUTH_USER_MODEL)$/;"	v	language:Python	class:Key
+owner	/home/charles/Programming/gitcentral/gitcentral/models.py	/^    owner = models.ForeignKey(AUTH_USER_MODEL)$/;"	v	language:Python	class:Repo
+owner	/home/charles/Programming/gitcentral/gitcentral/models.py	/^    owner = models.ForeignKey(AUTH_USER_MODEL)$/;"	v	language:Python	class:RepoPermission
+path	/home/charles/Programming/gitcentral/gitcentral/models.py	/^    path = models.CharField(max_length=255)$/;"	v	language:Python	class:Repo
+permission	/home/charles/Programming/gitcentral/gitcentral/models.py	/^    permission = models.IntegerField(default=0)$/;"	v	language:Python	class:RepoPermission
+permissions	/home/charles/Programming/gitcentral/gitcentral/views.py	/^	permissions = RepoPermission.objects.filter(owner=self.request.user)$/;"	v	language:Python	class:AllRepoListView
+permissions	/home/charles/Programming/gitcentral/gitcentral/views.py	/^	permissions = RepoPermission.objects.filter(owner=self.request.user)$/;"	v	language:Python	class:RepoListView
+post_save	/home/charles/Programming/gitcentral/gitcentral/models.py	/^from django.db.models.signals import post_save$/;"	i	language:Python
+public	/home/charles/Programming/gitcentral/gitcentral/models.py	/^    public = models.BooleanField(default=True)$/;"	v	language:Python	class:Repo
+Q	/home/charles/Programming/gitcentral/gitcentral/views.py	/^from django.db.models import Q$/;"	i	language:Python
+receiver	/home/charles/Programming/gitcentral/gitcentral/models.py	/^from django.dispatch import receiver$/;"	i	language:Python
+render	/home/charles/Programming/gitcentral/gitcentral/views.py	/^from django.shortcuts import render, get_object_or_404$/;"	i	language:Python
+repo	/home/charles/Programming/gitcentral/gitcentral/models.py	/^    repo = models.ForeignKey('gitcentral.Repo')$/;"	v	language:Python	class:RepoPermission
+Repo	/home/charles/Programming/gitcentral/gitcentral/models.py	/^class Repo(models.Model):$/;"	c	language:Python
+RepoCreateView	/home/charles/Programming/gitcentral/gitcentral/views.py	/^class RepoCreateView(CreateView):$/;"	c	language:Python
+RepoDetailView	/home/charles/Programming/gitcentral/gitcentral/views.py	/^class RepoDetailView(DetailView):$/;"	c	language:Python
+RepoListView	/home/charles/Programming/gitcentral/gitcentral/views.py	/^class RepoListView(ListView):$/;"	c	language:Python
+RepoPermission	/home/charles/Programming/gitcentral/gitcentral/models.py	/^class RepoPermission(models.Model):$/;"	c	language:Python
+repo_pre_save	/home/charles/Programming/gitcentral/gitcentral/models.py	/^def repo_pre_save(sender, instance, created, raw, **kwargs):$/;"	f	language:Python
+reverse	/home/charles/Programming/gitcentral/gitcentral/views.py	/^from django.core.urlresolvers import reverse$/;"	i	language:Python
+ROOT_URLCONF	/home/charles/Programming/gitcentral/gitcentral/settings.py	/^ROOT_URLCONF = 'gitcentral.urls'$/;"	v	language:Python
+SECRET_KEY	/home/charles/Programming/gitcentral/gitcentral/settings.py	/^SECRET_KEY = '$8$)za+jonf_&q--&3l*s5u%)6sm2m#d-dxe3km%32_qg0gj@a'$/;"	v	language:Python
+settings	/home/charles/Programming/gitcentral/gitcentral/models.py	/^from django.conf import settings$/;"	i	language:Python
+slugify	/home/charles/Programming/gitcentral/gitcentral/models.py	/^from django.template.defaultfilters import slugify$/;"	i	language:Python
+STATIC_URL	/home/charles/Programming/gitcentral/gitcentral/settings.py	/^STATIC_URL = '\/static\/'$/;"	v	language:Python
+TEMPLATES	/home/charles/Programming/gitcentral/gitcentral/settings.py	/^TEMPLATES = [$/;"	v	language:Python
+TIME_ZONE	/home/charles/Programming/gitcentral/gitcentral/settings.py	/^TIME_ZONE = 'UTC'$/;"	v	language:Python
+unicode_literals	/home/charles/Programming/gitcentral/gitcentral/models.py	/^from __future__ import unicode_literals$/;"	i	language:Python
+UpdateView	/home/charles/Programming/gitcentral/gitcentral/views.py	/^from django.views.generic.edit import UpdateView, CreateView$/;"	i	language:Python
+url	/home/charles/Programming/gitcentral/gitcentral/urls.py	/^from django.conf.urls import url$/;"	i	language:Python
+urlpatterns	/home/charles/Programming/gitcentral/gitcentral/urls.py	/^urlpatterns = [$/;"	v	language:Python
+User	/home/charles/Programming/gitcentral/gitcentral/views.py	/^from django.contrib.auth.models import User$/;"	i	language:Python
+user_can_read	/home/charles/Programming/gitcentral/gitcentral/models.py	/^    def user_can_read(self, user):$/;"	m	language:Python	class:Repo
+USE_I18N	/home/charles/Programming/gitcentral/gitcentral/settings.py	/^USE_I18N = True$/;"	v	language:Python
+USE_L10N	/home/charles/Programming/gitcentral/gitcentral/settings.py	/^USE_L10N = True$/;"	v	language:Python
+USE_TZ	/home/charles/Programming/gitcentral/gitcentral/settings.py	/^USE_TZ = True$/;"	v	language:Python
+WSGI_APPLICATION	/home/charles/Programming/gitcentral/gitcentral/settings.py	/^WSGI_APPLICATION = 'gitcentral.wsgi.application'$/;"	v	language:Python
+__unicode__	/home/charles/Programming/gitcentral/gitcentral/models.py	/^    def __unicode__(self):$/;"	m	language:Python	class:Repo	file:
