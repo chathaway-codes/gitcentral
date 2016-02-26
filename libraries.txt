@@ -1,0 +1,4 @@
+django
+pyasn1
+pycrypto
+Twisted
