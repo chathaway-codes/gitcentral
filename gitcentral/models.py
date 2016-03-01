@@ -43,11 +43,14 @@ class Repo(models.Model):
     def user_can_read(self, user):
 	if self.public:
 	    return True
-	get_object_or_404(RepoPermission, owner=user, repo=self)
+	if RepoPermission.objects.filter(owner=user, repo=self).count() == 0:
+	    return False
 	return True
 
     def user_can_write(self, user):
-	rp = get_object_or_404(RepoPermission, owner=user, repo=self)
+	if RepoPermission.objects.filter(owner=user, repo=self).count() == 0:
+	    return False
+	rp = RepoPermission.objects.filter(owner=user, repo=self)[0]
 	return rp.permission > 0
 
     @staticmethod
