@@ -3,19 +3,45 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
+from django.http import Http404
 from django.views.generic import ListView, DetailView, View
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
 
 from .models import *
 
-class RepoDetailView(DetailView):
+class RestrictBasedOnRepoMixin(object):
+    def get_object(self):
+        object = super(RestrictBasedOnRepoMixin, self).get_object()
+
+	if hasattr(self, "require_admin") and self.require_admin:
+	    if self.request.user.is_authenticated() and repo.user_can_admin(self.request.user):
+	        return object
+	    raise PermissionDenied()
+
+	if request.method == "GET" and object.public:
+	    return object
+
+	if not self.request.user.is_authenticated() \
+	        and object.public == False:
+	    raise Http404
+	if object.owner == self.request.user:
+	    return object
+
+	permission = get_object_or_404(RepoPermission, repo=object, owner=self.request.user)
+	if request.method == "GET" and repo.user_can_read(self.request.user):
+	    return object
+	if (request.method == "POST" or request.method == "PUT") \
+	        and repo.user_can_write(self.request.user):
+	    return object
+	raise PermissionDenied()
+
+class RepoDetailView(DetailView, RestrictBasedOnRepoMixin):
     model = Repo
 
     def get_object(self):
         user = get_object_or_404(User, username=self.kwargs["username"])
         repo = get_object_or_404(Repo, owner=user, path=self.kwargs["path"])
-        repo.user_can_read(self.request.user)
         return repo
 
 class AllRepoListView(ListView):
