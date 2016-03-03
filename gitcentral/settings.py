@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
 
+    'bootstrap3',
+
     'gitcentral',
 ]
 
@@ -137,6 +139,8 @@ STATIC_URL = '/static/'
 # App settings
 GIT_ROOT = os.path.join(BASE_DIR, 'repos')
 GIT_SERVER_PORT = 5022
+
+SITE_ID = 1
 
 # We at least need public and private keys
 from local_settings import *

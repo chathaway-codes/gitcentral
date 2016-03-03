@@ -1,5 +1,12 @@
 {% extends "base.html" %}
 
+{% block page_header %}
+    List of all repositories
+    {% if repo_user %}
+        <small>for {{ repo_user }}</small>
+    {% endif %}
+{% endblock %}
+
 {% block content %}
 <ul>
 {% for repo in object_list %}
