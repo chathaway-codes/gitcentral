@@ -56,6 +56,8 @@ class Repo(models.Model):
     def user_can_write(self, user):
 	if not user.is_authenticated():
 	    return False
+	if user == self.owner:
+	    return True
 	if RepoPermission.objects.filter(owner=user, repo=self).count() == 0:
 	    return False
 	rp = RepoPermission.objects.filter(owner=user, repo=self)[0]
@@ -64,10 +66,15 @@ class Repo(models.Model):
     def user_can_admin(self, user):
 	if not user.is_authenticated():
 	    return False
+	if user == self.owner:
+	    return True
 	if RepoPermission.objects.filter(owner=user, repo=self).count() == 0:
 	    return False
 	rp = RepoPermission.objects.filter(owner=user, repo=self)[0]
 	return rp.permission > 1
+
+    def git_repo(self):
+        return git.Repo(Repo.get_repo_path(self))
 
     @staticmethod
     def get_repo_path(repo):

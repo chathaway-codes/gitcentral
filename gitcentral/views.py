@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.views.generic import ListView, DetailView, View
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
@@ -38,6 +38,58 @@ def check_permissions(repo, request, require_admin=False):
 
 class RepoDetailView(DetailView):
     model = Repo
+
+    def returns_file(self):
+        r = self.get_object().git_repo()
+        tree = r.heads.master.commit.tree
+        trees = []
+        ttree = tree
+        path = self.kwargs['dirfile']
+        if path != "":
+            for p in path.split("/"):
+	        print p
+		if p == "":
+		    break
+                found = False
+                for t in ttree.trees:
+                    if t.name == p:
+                        ttree = t
+                        found = True
+                        break
+                if not found:
+                   # Must be a file; get it and return it
+                   self.return_file = True
+                   self.blob = ttree[p]
+                   return True
+        for tree in ttree.trees:
+            trees += [{
+              "name": tree.name,
+              "path": tree.path
+            }]
+        blobs = []
+        for blob in ttree.blobs:
+            blobs += [{
+              "name": blob.name,
+              "path": blob.path
+            }]
+	self.blobs = blobs
+	self.trees = trees
+	return False
+
+    def get(self, request, *args, **kwargs):
+        if self.returns_file():
+	    response = HttpResponse(content_type='application/octet-stream')
+	    response['Content-Disposition'] = 'attachment; filename="%s"' % self.blob.name
+	    response.write(self.blob.data_stream.read())
+	    return response
+	return super(RepoDetailView,self).get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(RepoDetailView, self).get_context_data(**kwargs)
+	self.return_file = False
+        context['files'] = self.blobs
+        context['dirs'] = self.trees
+        return context
 
     def get_object(self):
         user = get_object_or_404(User, username=self.kwargs["username"])
