@@ -28,6 +28,10 @@ urlpatterns = [
     url(r'^repo/(?P<username>\w+)/$', RepoListView.as_view(), name="user-repo-list"),
     url(r'^repo/(?P<username>\w+)/(?P<path>[\w-]+)/(?P<dirfile>.*)$', RepoDetailView.as_view(), name="repo-detail"),
 
+    url(r'^permission/(?P<repo_id>\d+)/(?P<user_id>\d+)/delete$', RepoPermissionDeleteView.as_view(), name="permission-delete"),
+    url(r'^permission/(?P<pk>\d+)/create/$', RepoPermissionCreateView.as_view(), name="permission-create"),
+    url(r'^permission/(?P<pk>\d+)/$', RepoPermissionListView.as_view(), name="permission-list"),
+
     url(r'^key/(?P<pk>\d+)/delete$', KeyDeleteView.as_view(), name="key-delete"),
     url(r'^key/create/$', KeyCreateView.as_view(), name="key-create"),
     url(r'^key/$', KeyListView.as_view(), name="key-list"),
