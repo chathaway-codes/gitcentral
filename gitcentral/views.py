@@ -3,11 +3,38 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
+from django.http import Http404
 from django.views.generic import ListView, DetailView, View
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
 
 from .models import *
+
+def check_permissions(repo, request, require_admin=False):
+    """ Determines if the current user (in request) has permission to access repo
+    Raises an exception if they cannot; so do not worry!
+    """
+    if require_admin:
+        if request.user.is_authenticated() and repo.user_can_admin(request.user):
+            return repo
+        raise PermissionDenied()
+
+    if request.method == "GET" and repo.public:
+        return repo
+
+    if not request.user.is_authenticated() \
+            and repo.public == False:
+        raise Http404
+    if repo.owner == request.user:
+        return repo
+
+    permission = get_repo_or_404(RepoPermission, repo=object, owner=request.user)
+    if request.method == "GET" and repo.user_can_read(request.user):
+        return repo
+    if (request.method == "POST" or request.method == "PUT") \
+            and repo.user_can_write(request.user):
+        return repo
+    raise PermissionDenied()
 
 class RepoDetailView(DetailView):
     model = Repo
@@ -15,7 +42,7 @@ class RepoDetailView(DetailView):
     def get_object(self):
         user = get_object_or_404(User, username=self.kwargs["username"])
         repo = get_object_or_404(Repo, owner=user, path=self.kwargs["path"])
-        repo.user_can_read(self.request.user)
+	check_permissions(repo, self.request)
         return repo
 
 class AllRepoListView(ListView):
@@ -60,11 +87,18 @@ class RepoPermissionListView(ListView):
 	return context
 
     def get_queryset(self):
-	return RepoPermission.objects.filter(repo=get_object_or_404(Repo, pk=self.kwargs['pk']))
+        repo=get_object_or_404(Repo, pk=self.kwargs['pk'])
+	check_permissions(repo, self.request, True)
+	return RepoPermission.objects.filter(repo=repo)
 
 class RepoPermissionCreateView(CreateView):
     model = RepoPermission
     fields = ('owner', 'permission',)
+
+    def get_form(self, form_class=None):
+        repo=get_object_or_404(Repo, pk=self.kwargs['pk'])
+	check_permissions(repo, self.request, True)
+        return super(RepoPermissionCreateView, self).get_form(form_class)
 
     def get_success_url(self):
         return reverse('permission-list', kwargs={"pk": self.object.repo.pk})
@@ -80,7 +114,9 @@ class RepoPermissionDeleteView(DeleteView):
     def get_success_url(self):
         return reverse('permission-list', kwargs={"pk": self.object.repo.pk})
     def get_object(self):
-    	repo_permission = get_object_or_404(RepoPermission, owner=get_object_or_404(User, pk=self.kwargs['user_id']), repo=get_object_or_404(Repo, pk=self.kwargs['repo_id']))
+        repo=get_object_or_404(Repo, pk=self.kwargs['repo_id'])
+	check_permissions(repo, self.request, True)
+    	repo_permission = get_object_or_404(RepoPermission, owner=get_object_or_404(User, pk=self.kwargs['user_id']), repo=repo)
         return repo_permission
 
 class KeyListView(ListView):

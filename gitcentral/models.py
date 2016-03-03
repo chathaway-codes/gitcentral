@@ -19,7 +19,11 @@ class Key(models.Model):
 
     def __unicode__(self):
     	t = self.key.split(" ", 3)
-	return "%s %s... %s" % (t[0], t[1][0:10], t[2])
+	if len(t) == 3:
+    	    return "%s %s... %s" % (t[0], t[1][0:min(len(t[1]),10)], t[2])
+	if len(t) == 2:
+	    return "%s %s..." % (t[0], t[1][0:min(len(t[1]),10)])
+    	return "Invalid key"
 
 class RepoPermission(models.Model):
     owner = models.ForeignKey(AUTH_USER_MODEL)
@@ -43,15 +47,27 @@ class Repo(models.Model):
     def user_can_read(self, user):
 	if self.public:
 	    return True
+	if not user.is_authenticated():
+	    return False
 	if RepoPermission.objects.filter(owner=user, repo=self).count() == 0:
 	    return False
 	return True
 
     def user_can_write(self, user):
+	if not user.is_authenticated():
+	    return False
 	if RepoPermission.objects.filter(owner=user, repo=self).count() == 0:
 	    return False
 	rp = RepoPermission.objects.filter(owner=user, repo=self)[0]
 	return rp.permission > 0
+
+    def user_can_admin(self, user):
+	if not user.is_authenticated():
+	    return False
+	if RepoPermission.objects.filter(owner=user, repo=self).count() == 0:
+	    return False
+	rp = RepoPermission.objects.filter(owner=user, repo=self)[0]
+	return rp.permission > 1
 
     @staticmethod
     def get_repo_path(repo):
