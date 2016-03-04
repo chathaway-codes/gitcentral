@@ -48,9 +48,8 @@ class GitSession(SSHSessionForUnixConchUser):
 	repo_username, path = path.split("/", 2)
 	repo_owner = User.objects.get(username=repo_username)
 	repo = Repo.objects.get(path=path, owner=repo_owner)
-	if repo.user_can_read(User.objects.get(username=self.avatar.username)):
-		# This will raise an exception if the user doesn't have permission to read
-		pass
+	if not repo.user_can_read(User.objects.get(username=self.avatar.username)):
+	    raise PermissionDenied()
 	# If the user is writing, verify they can
 	if cmd == "git-receive-pack" and not repo.user_can_write(User.objects.get(username=self.avatar.username)):
 		raise PermissionDenied()

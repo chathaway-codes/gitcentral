@@ -28,7 +28,7 @@ def check_permissions(repo, request, require_admin=False):
     if repo.owner == request.user:
         return repo
 
-    permission = get_repo_or_404(RepoPermission, repo=object, owner=request.user)
+    permission = get_object_or_404(RepoPermission, repo=repo, owner=request.user)
     if request.method == "GET" and repo.user_can_read(request.user):
         return repo
     if (request.method == "POST" or request.method == "PUT") \
@@ -44,6 +44,9 @@ class RepoDetailView(DetailView):
 	if len(r.heads) == 0:
 	    self.trees = []
 	    self.blobs = []
+	    class T:
+	        path = ""
+	    self.current_tree = T()
 	    return False
         tree = r.heads.master.commit.tree
         trees = []
@@ -120,7 +123,7 @@ class AllRepoListView(ListView):
     def get_queryset(self):
 	if self.request.user.is_authenticated():
 		permissions = RepoPermission.objects.filter(owner=self.request.user)
-		return Repo.objects.filter(Q(public=True) | Q(repopermission__in=permissions)).distinct()
+		return Repo.objects.filter(Q(public=True) | Q(repopermission__in=permissions) | Q(owner=self.request.user)).distinct()
 	return Repo.objects.filter(public=True)
 
 class RepoListView(ListView):
@@ -132,10 +135,11 @@ class RepoListView(ListView):
 	return context
 
     def get_queryset(self):
-	permissions = RepoPermission.objects.filter(owner=get_object_or_404(User, username=self.kwargs['username']))
+        owner=get_object_or_404(User, username=self.kwargs['username'])
+	permissions = RepoPermission.objects.filter(owner=owner)
 	if self.request.user.is_authenticated():
-	    return Repo.objects.filter(Q(public=True) | Q(repopermission__in=permissions)).distinct()
-	return Repo.objects.filter(public=True)
+	    return Repo.objects.filter(Q(public=True) | Q(repopermission__in=permissions), Q(owner=owner)).distinct()
+	return Repo.objects.filter(public=True, owner=owner)
 
 class RepoCreateView(CreateView):
     model = Repo

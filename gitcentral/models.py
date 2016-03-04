@@ -49,6 +49,8 @@ class Repo(models.Model):
 	    return True
 	if not user.is_authenticated():
 	    return False
+	if user == self.owner:
+	    return True
 	if RepoPermission.objects.filter(owner=user, repo=self).count() == 0:
 	    return False
 	return True
@@ -60,7 +62,7 @@ class Repo(models.Model):
 	    return True
 	if RepoPermission.objects.filter(owner=user, repo=self).count() == 0:
 	    return False
-	rp = RepoPermission.objects.filter(owner=user, repo=self)[0]
+	rp = RepoPermission.objects.get(owner=user, repo=self)
 	return rp.permission > 0
 
     def user_can_admin(self, user):
@@ -92,3 +94,4 @@ def repo_pre_save(sender, instance, created, raw, **kwargs):
 
 	# Make sure the owner has permissions on the repo
 	permission = RepoPermission(owner=instance.owner, repo=instance, permission=3)
+	permission.save()
