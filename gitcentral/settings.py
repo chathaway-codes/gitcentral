@@ -142,6 +142,8 @@ GIT_SERVER_PORT = 5022
 
 SITE_ID = 1
 
+LOGIN_REDIRECT_URL = "/"
+
 # We at least need public and private keys
 from local_settings import *
 a = SERVER_PUBLIC_KEY

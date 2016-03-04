@@ -41,6 +41,10 @@ class RepoDetailView(DetailView):
 
     def returns_file(self):
         r = self.get_object().git_repo()
+	if len(r.heads) == 0:
+	    self.trees = []
+	    self.blobs = []
+	    return False
         tree = r.heads.master.commit.tree
         trees = []
         ttree = tree
@@ -89,6 +93,7 @@ class RepoDetailView(DetailView):
 	self.return_file = False
         context['files'] = self.blobs
         context['dirs'] = self.trees
+	context['can_admin'] = context['object'].user_can_admin(self.request.user)
         return context
 
     def get_object(self):

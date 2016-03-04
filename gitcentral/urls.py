@@ -23,6 +23,7 @@ urlpatterns = [
 
     url(r'^accounts/', include('allauth.urls')),
 
+    url(r'^$', AllRepoListView.as_view(), name="repo-list"),
     url(r'^repo/$', AllRepoListView.as_view(), name="repo-list"),
     url(r'^repo/create/$', RepoCreateView.as_view(), name="repo-create"),
     url(r'^repo/(?P<username>\w+)/$', RepoListView.as_view(), name="user-repo-list"),

@@ -2,7 +2,9 @@
 
 {% block content %}
 <h1>{{ object }} <small>{% if repo.public %}public{% else %}private{% endif %}</small></h1>
-<a href="{% url "permission-list" pk=object.pk %}">Permissions</a>
+{% if can_admin %}
+    <a href="{% url "permission-list" pk=object.pk %}">Permissions</a>
+{% endif %}
 {% if user.is_authenticated %}
 <p>Clone URL: {% include 'gitcentral/_repo_clone.html' %}</p>
 {% endif %}
