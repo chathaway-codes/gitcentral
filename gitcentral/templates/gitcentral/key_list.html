@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 
+{% block page_header %}SSH Keys{% endblock %}
+
 {% block content %}
-	<h1>SSH Keys</h1>
 	<a href="{% url "key-create" %}">Add Key</a>
 	<ul>
 	{% for key in object_list %}
-		<li>{{ key }}<small><a href="{% url "key-delete" pk=key.pk %}">delete</a></small></li>
+		<li>{{ key }} <small><a href="{% url "key-delete" pk=key.pk %}">delete</a></small></li>
 	{% endfor %}
 	</ul>
 {% endblock %}

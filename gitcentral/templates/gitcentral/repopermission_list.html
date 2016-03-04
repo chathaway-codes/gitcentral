@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 
+{% block page_header %}Permission for {{ repo }}{% endblock %}
+
 {% block content %}
-	<h1>Permission for {{ repo }}</h1>
 	<a href="{% url "permission-create" pk=repo.pk %}">Add Permission</a>
 	<ul>
 	{% for permission in object_list %}
-		<li>{{ permission.owner }} -- {{ permission.permission }}<small><a href="{% url "permission-delete" user_id=permission.owner.pk repo_id=permission.repo.pk %}">delete</a></small></li>
+		<li>{{ permission.owner }} -- {{ permission.permission }} <small><a href="{% url "permission-delete" user_id=permission.owner.pk repo_id=permission.repo.pk %}">delete</a></small></li>
 	{% endfor %}
 	</ul>
 {% endblock %}
