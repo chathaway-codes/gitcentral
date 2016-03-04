@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load gitcentral %}
 
 {% block page_header %}
     List of all repositories
@@ -12,7 +13,7 @@
 {% for object in object_list %}
     <li>
     <a href="{% url "repo-detail" username=object.owner.username path=object.path dirfile="" %}">{{ object.name }}</a>
-	    <span>{% include 'gitcentral/_repo_clone.html' %}</span>
+	    <span>{% render_clone_url object %}</span>
     </li>
 {% endfor %}
 </ul>
