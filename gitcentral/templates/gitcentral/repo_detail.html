@@ -10,6 +10,12 @@
 {% if user.is_authenticated %}
 <p>Clone URL: {% render_clone_url object %}</p>
 {% endif %}
+<ol class="breadcrumb">
+    <li><a href="{% url "repo-detail" username=object.owner.username path=object.path dirfile="" %}">{{ object }}</a></li>
+{% for bc in breadcrumbs %}
+    <li><a href="{% url "repo-detail" username=object.owner.username path=object.path dirfile=bc.path %}">{{ bc.name }}</a></li>
+{% endfor %}
+</ol>
 <h2>Folders</h2>
 <ul>
 {% for dir in dirs %}

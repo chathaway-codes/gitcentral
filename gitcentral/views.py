@@ -53,7 +53,7 @@ class RepoDetailView(DetailView):
             for p in path.split("/"):
 	        print p
 		if p == "":
-		    break
+                    break
                 found = False
                 for t in ttree.trees:
                     if t.name == p:
@@ -78,6 +78,7 @@ class RepoDetailView(DetailView):
             }]
 	self.blobs = blobs
 	self.trees = trees
+	self.current_tree = ttree
 	return False
 
     def get(self, request, *args, **kwargs):
@@ -94,6 +95,17 @@ class RepoDetailView(DetailView):
         context['files'] = self.blobs
         context['dirs'] = self.trees
 	context['can_admin'] = context['object'].user_can_admin(self.request.user)
+	breadcrumbs = []
+	current_path = ""
+	for p in self.current_tree.path.split("/"):
+	    if p == "":
+	        continue
+	    current_path = os.path.join(current_path, p)
+	    breadcrumbs += [{
+	        "name": p,
+		"path": current_path
+	    }]
+	context['breadcrumbs'] = breadcrumbs
         return context
 
     def get_object(self):
