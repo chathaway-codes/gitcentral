@@ -1,8 +1,14 @@
 *.swp
 *.pyc
 *.sqlite3
+.coverage
+.figleaf
+id_rsa*
 local_settings.py
-repos/
 python/
+coverage/
+htmlcov/
 
-
+repos/*
+!repos/test_data/test_repo1/
+!repos/test_data/test_repo2/
