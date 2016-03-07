@@ -54,7 +54,6 @@ class RepoDetailView(DetailView):
         path = self.kwargs['dirfile']
         if path != "":
             for p in path.split("/"):
-	        print p
 		if p == "":
                     break
                 found = False

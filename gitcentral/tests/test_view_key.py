@@ -34,3 +34,16 @@ class KeyViewTestCases(TestCase):
 	self.assertEqual(response.status_code, 302)
 	self.assertTrue(initialKeys + 1 == Key.objects.count())
 	self.client.logout()
+
+    def test_repo_delete_view(self):
+        self.assertTrue(self.client.login(username=self.test_user.username, password="password"))
+	initialKeys = Key.objects.count()
+        response = self.client.post(reverse('key-create'), {
+	    "owner": "Alphabet soup",
+	    "key": "Hello world!"
+	})
+	self.assertEqual(response.status_code, 302)
+	respone = self.client.delete(reverse('key-delete', kwargs={'pk': self.test_user.key_set.all()[0].pk}))
+	self.assertEqual(response.status_code, 302)
+	self.assertTrue(initialKeys == Key.objects.count())
+	self.client.logout()
