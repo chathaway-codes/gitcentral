@@ -46,11 +46,17 @@ class RepoDetailView(DetailView):
 	if len(r.heads) == 0:
 	    self.trees = []
 	    self.blobs = []
+	    self.branch = 'master'
 	    class T:
 	        path = ""
 	    self.current_tree = T()
 	    return False
-        tree = r.heads.master.commit.tree
+	if 'branch' in self.request.GET:
+  	    branch = self.request.GET['branch'] 
+	else:
+	    branch = 'master'
+	self.branch = branch
+        tree = r.heads[branch].commit.tree
         trees = []
         ttree = tree
         path = self.kwargs['dirfile']
@@ -99,6 +105,7 @@ class RepoDetailView(DetailView):
         context['files'] = self.blobs
         context['dirs'] = self.trees
 	context['can_admin'] = context['object'].user_can_admin(self.request.user)
+	context['branch'] = self.branch
 	breadcrumbs = []
 	current_path = ""
 	for p in self.current_tree.path.split("/"):

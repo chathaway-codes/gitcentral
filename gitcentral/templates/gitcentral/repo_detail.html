@@ -16,25 +16,30 @@
 {% if user.is_authenticated %}
 <p>Clone URL: {% render_clone_url object %}</p>
 {% buttons %}
+<label>Current Branch</label><select onchange="window.location = '{% url "repo-detail" username=object.owner.username path=object.path dirfile=dir.path %}?branch='+this.value">
+{% for b in repo.branches %}
+    <option value="{{ b }}" {% if b.name == branch %}selected{% endif %}>{{ b }}</option>
+{% endfor %}
+</select>
 <button type="submit" class="btn btn-primary" onclick="window.location = '{% url "repo-fork" username=object.owner.username path=object.path %}'">Fork</button>
 {% endbuttons %}
 {% endif %}
 <ol class="breadcrumb">
-    <li><a href="{% url "repo-detail" username=object.owner.username path=object.path dirfile="" %}">{{ object }}</a></li>
+    <li><a href="{% url "repo-detail" username=object.owner.username path=object.path dirfile="" %}?branch={{ branch }}">{{ object }}</a></li>
 {% for bc in breadcrumbs %}
-    <li><a href="{% url "repo-detail" username=object.owner.username path=object.path dirfile=bc.path %}">{{ bc.name }}</a></li>
+    <li><a href="{% url "repo-detail" username=object.owner.username path=object.path dirfile=bc.path %}?branch={{ branch }}">{{ bc.name }}</a></li>
 {% endfor %}
 </ol>
 <h2>Folders</h2>
 <ul>
 {% for dir in dirs %}
-    <li><a href="{% url "repo-detail" username=object.owner.username path=object.path dirfile=dir.path %}">{{ dir.name }}</a></li>
+    <li><a href="{% url "repo-detail" username=object.owner.username path=object.path dirfile=dir.path %}?branch={{ branch }}">{{ dir.name }}</a></li>
 {% endfor %}
 </ul>
 <h2>Files</h2>
 <ul>
 {% for file in files %}
-    <li><a href="{% url "repo-detail" username=object.owner.username path=object.path dirfile=file.path %}">{{ file.name }}</a></li>
+    <li><a href="{% url "repo-detail" username=object.owner.username path=object.path dirfile=file.path %}?branch={{ branch }}">{{ file.name }}</a></li>
 {% endfor %}
 </ul>
 {% endblock %}

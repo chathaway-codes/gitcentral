@@ -97,7 +97,8 @@ def can_run_command(user, command):
         raise PermissionDenied()
     cmd, path = command.split(" ", 2)
     # Remove the quotes from the path
-    path2 = path[1:-1]
+    path2 = path[2:-1]
+    print path2
     repo_username, path = path2.split("/", 2)
     repo_owner = User.objects.get(username=repo_username)
     repo = Repo.objects.get(path=path, owner=repo_owner)

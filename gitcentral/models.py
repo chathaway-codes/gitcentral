@@ -84,6 +84,10 @@ class Repo(models.Model):
 	rp = RepoPermission.objects.filter(owner=user, repo=self)[0]
 	return rp.permission > 1
 
+
+    def branches(self):
+        return self.git_repo().refs
+
     def git_repo(self):
         return git.Repo(Repo.get_repo_path(self))
 
