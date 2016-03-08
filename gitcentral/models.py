@@ -26,10 +26,16 @@ class Key(models.Model):
     	return "Invalid key"
 
 class RepoPermission(models.Model):
-    owner = models.ForeignKey(AUTH_USER_MODEL)
+    owner = models.ForeignKey(AUTH_USER_MODEL, verbose_name="User")
     repo = models.ForeignKey('gitcentral.Repo')
 
-    permission = models.IntegerField(default=0)
+    PERMISSION_LEVELS = (
+        (0, 'Read-only'),
+	(1, 'Read-Write'),
+	(2, 'Admin'),
+    )
+
+    permission = models.IntegerField(default=0, choices=PERMISSION_LEVELS)
 
 class Repo(models.Model):
     name = models.CharField(max_length=255)
