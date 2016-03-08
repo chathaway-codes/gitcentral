@@ -25,34 +25,34 @@ class GitServerTestCases(TestCase):
 
     def test_has_permission_to_read(self):
         # If this command raises an exception, the permissions don't work
-        can_run_command(self.test_user, "git-upload-pack '%s'" % self.repos[0].get_relative_path())
+        can_run_command(self.test_user, "git-upload-pack '/%s'" % self.repos[0].get_relative_path())
 
     def test_does_have_permission_to_read(self):
         # If this command raises an exception, the permissions don't work
 	user = User.objects.create_user(username="my_user", password="password")
 	permission = RepoPermission.objects.create(owner=user, repo=self.repos[1], permission=0)
-        can_run_command(user, "git-upload-pack '%s'" % self.repos[1].get_relative_path())
+        can_run_command(user, "git-upload-pack '/%s'" % self.repos[1].get_relative_path())
 
     def test_does_not_have_permission_to_read(self):
         # If this command raises an exception, the permissions don't work
 	user = User.objects.create_user(username="my_user", password="password")
 	error_raised = False
 	try:
-            can_run_command(user, "git-upload-pack '%s'" % self.repos[1].get_relative_path())
+            can_run_command(user, "git-upload-pack '/%s'" % self.repos[1].get_relative_path())
 	except PermissionDenied:
 	    error_raised = True
 	self.assertTrue(error_raised)
 
     def test_has_permission_to_write(self):
         # If this command raises an exception, the permissions don't work
-        can_run_command(self.test_user, "git-receive-pack '%s'" % self.repos[0].get_relative_path())
+        can_run_command(self.test_user, "git-receive-pack '/%s'" % self.repos[0].get_relative_path())
 
     def test_does_not_have_permission_to_write(self):
         # If this command raises an exception, the permissions don't work
 	user = User.objects.create_user(username="my_user", password="password")
 	error_raised = False
 	try:
-            can_run_command(user, "git-receive-pack '%s'" % self.repos[1].get_relative_path())
+            can_run_command(user, "git-receive-pack '/%s'" % self.repos[1].get_relative_path())
 	except PermissionDenied:
 	    error_raised = True
 	self.assertTrue(error_raised)
@@ -63,7 +63,7 @@ class GitServerTestCases(TestCase):
 	permission = RepoPermission.objects.create(owner=user, repo=self.repos[1], permission=0)
 	error_raised = False
 	try:
-            can_run_command(user, "git-receive-pack '%s'" % self.repos[1].get_relative_path())
+            can_run_command(user, "git-receive-pack '/%s'" % self.repos[1].get_relative_path())
 	except PermissionDenied:
 	    error_raised = True
 	self.assertTrue(error_raised)
