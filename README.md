@@ -30,6 +30,7 @@ To begin developing on this project, install python-virtualenv and configure the
 
 For Ubuntu, execute the following after cloning the repository:
 Only run these commands when setting up a machine for the first time
+
     # RUNONCE
     sudo apt-get install python-virtualenv
     sudo apt-get build-dep python-twisted
@@ -41,7 +42,9 @@ Only run these commands when setting up a machine for the first time
     echo -n -e "\"\"\"\n\nSERVER_PRIVATE_KEY = \"\"\"" >> local_settings.py
     cat id_rsa >> local_settings.py
     echo -e "\"\"\"" >> local_settings.py
+
 Run these commands everytime
+
     # Everytime you begin development, before starting the server
     . ./activate
     # Sync the database
