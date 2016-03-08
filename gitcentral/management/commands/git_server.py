@@ -1,11 +1,16 @@
+import sys
+
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 
 from twisted.cred import portal
 from twisted.conch.checkers import SSHPublicKeyChecker
 from twisted.internet import reactor
+from twisted.python import log
 
 from gitcentral.git_server import DjangoSSHKeyDB, GitRealm, GitSSHFactory
+
+log.startLogging(sys.stderr)
 
 class Command(BaseCommand):
     def handle(self, *args, **options):

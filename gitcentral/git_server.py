@@ -67,7 +67,18 @@ class GitSession(SSHSessionForUnixConchUser):
 	    self.setModes()
 	self.oldWrite = proto.transport.write
 	proto.transport.write = self._writeHack
-	self.avatar.conn.transport.transport.setTcpNoDelay(1)
+	self.avatar.conn.transport.transport.setTcpNoDelay(0)
+
+class GitSSHConnection(connection.SSHConnection):
+    def sendEOF(self, channel):
+        """
+        Send an EOF (End of File) for a channel.
+
+        @type channel:  subclass of L{SSHChannel}
+        """
+        if channel.localClosed:
+            return # we're already closed
+        log.msg('Told to send EOF -- ignoring')
 
 class GitSSHFactory(factory.SSHFactory):
     publicKeys = {
@@ -78,7 +89,7 @@ class GitSSHFactory(factory.SSHFactory):
     }
     services = {
         'ssh-userauth': userauth.SSHUserAuthServer,
-        'ssh-connection': connection.SSHConnection
+        'ssh-connection': GitSSHConnection
     }
 
 class DjangoSSHKeyDB(object):
@@ -98,7 +109,6 @@ def can_run_command(user, command):
     cmd, path = command.split(" ", 2)
     # Remove the quotes from the path
     path2 = path[2:-1]
-    print path2
     repo_username, path = path2.split("/", 2)
     repo_owner = User.objects.get(username=repo_username)
     repo = Repo.objects.get(path=path, owner=repo_owner)
