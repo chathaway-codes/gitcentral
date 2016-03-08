@@ -1,3 +1,5 @@
+import mimetypes
+
 from django.db.models import Q
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404
@@ -85,8 +87,8 @@ class RepoDetailView(DetailView):
 
     def get(self, request, *args, **kwargs):
         if self.returns_file():
-	    response = HttpResponse(content_type='application/octet-stream')
-	    response['Content-Disposition'] = 'attachment; filename="%s"' % self.blob.name
+	    response = HttpResponse(content_type=mimetypes.guess_type(self.blob.name)[0])
+	    response['Content-Length'] = self.blob.size
 	    response.write(self.blob.data_stream.read())
 	    return response
 	return super(RepoDetailView,self).get(request, *args, **kwargs)
