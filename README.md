@@ -1,5 +1,6 @@
 # Gitcentral
 
+[![Build Status](https://drone.io/github.com/chuck211991/gitcentral/status.png)](https://drone.io/github.com/chuck211991/gitcentral/latest)
 
 This projects aims to create an open-source implementation similiar to the very excellent Github.
 The need for this is justified merely by the success of Github, which has done a wonderful job of unifying communities and providing a central location for projects to store their codebase, documentation, and issues.
