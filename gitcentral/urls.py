@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^repo/create/$', RepoCreateView.as_view(), name="repo-create"),
     url(r'^repo/(?P<username>\w+)/$', RepoListView.as_view(), name="user-repo-list"),
     url(r'^repo/(?P<username>\w+)/(?P<path>[\w-]+)/(?P<dirfile>.*)$', RepoDetailView.as_view(), name="repo-detail"),
+    url(r'^fork/(?P<username>\w+)/(?P<path>[\w-]+)/$', RepoForkView.as_view(), name="repo-fork"),
 
     url(r'^permission/(?P<repo_id>\d+)/(?P<user_id>\d+)/delete$', RepoPermissionDeleteView.as_view(), name="permission-delete"),
     url(r'^permission/(?P<pk>\d+)/create/$', RepoPermissionCreateView.as_view(), name="permission-create"),

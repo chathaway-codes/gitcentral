@@ -152,6 +152,17 @@ class RepoCreateView(CreateView):
         form.instance.owner = self.request.user
         return super(RepoCreateView, self).form_valid(form)
 
+class RepoForkView(CreateView):
+    model = Repo
+    fields = ('name', 'public',)
+    def get_success_url(self):
+        return reverse('repo-detail', kwargs={"path": self.object.path, "username": self.object.owner.username, "dirfile": ""})
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        form.instance.parent = Repo.get_repo(self.kwargs['username'], self.kwargs['path'])
+        return super(RepoForkView, self).form_valid(form)
+
 class RepoPermissionListView(ListView):
     model = RepoPermission
 

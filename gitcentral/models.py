@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 import os
 
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -10,6 +11,7 @@ from django.shortcuts import get_object_or_404
 from django.template.defaultfilters import slugify
 
 import git
+
 
 AUTH_USER_MODEL = getattr(settings, 'AUTH_USER_MODEL', 'auth.User')
 
@@ -43,6 +45,7 @@ class Repo(models.Model):
     path = models.CharField(max_length=255)
     owner = models.ForeignKey(AUTH_USER_MODEL)
     public = models.BooleanField(default=True)
+    parent = models.ForeignKey('gitcentral.Repo', blank=True, null=True)
 
     def __unicode__(self):
 	return "%s/%s" % (self.owner.username, self.name)
@@ -88,6 +91,10 @@ class Repo(models.Model):
     def get_repo_path(repo):
 	return os.path.join(settings.GIT_ROOT, repo.owner.username, repo.path)
 
+    @staticmethod
+    def get_repo(username, path):
+        return get_object_or_404(Repo, owner=get_object_or_404(User, username=username), path=path)
+
 @receiver(post_save, sender=Repo)
 def repo_pre_save(sender, instance, created, raw, **kwargs):
     if created:
@@ -95,8 +102,11 @@ def repo_pre_save(sender, instance, created, raw, **kwargs):
 	instance.path = slugify(instance.name)
 	instance.save()
 
-	# Init a Git repo
-	r = git.Repo.init(Repo.get_repo_path(instance), bare=True)
+	if instance.parent == None:
+    	# Init a Git repo
+            r = git.Repo.init(Repo.get_repo_path(instance), bare=True)
+	else:
+	    instance.parent.git_repo().clone(Repo.get_repo_path(instance), bare=True)
 
 	# Make sure the owner has permissions on the repo
 	permission = RepoPermission(owner=instance.owner, repo=instance, permission=3)

@@ -1,7 +1,13 @@
 {% extends "base.html" %}
 {% load gitcentral %}
+{% load bootstrap3 %}
 
-{% block page_header %}{{ object }} <small>{% if repo.public %}public{% else %}private{% endif %}</small>{% endblock %}
+{% block page_header %}
+    {{ object }} <small>{% if repo.public %}public{% else %}private{% endif %}</small>
+    {% if object.parent %}
+        <small><p>Fork of <a href="{% url 'repo-detail' username=object.parent.owner.username path=object.parent.path dirfile="" %}">{{ object.parent }}</a></small>
+    {% endif %}
+{% endblock %}
 
 {% block content %}
 {% if can_admin %}
@@ -9,6 +15,9 @@
 {% endif %}
 {% if user.is_authenticated %}
 <p>Clone URL: {% render_clone_url object %}</p>
+{% buttons %}
+<button type="submit" class="btn btn-primary" onclick="window.location = '{% url "repo-fork" username=object.owner.username path=object.path %}'">Fork</button>
+{% endbuttons %}
 {% endif %}
 <ol class="breadcrumb">
     <li><a href="{% url "repo-detail" username=object.owner.username path=object.path dirfile="" %}">{{ object }}</a></li>
