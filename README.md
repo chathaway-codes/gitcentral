@@ -2,10 +2,13 @@
 
 [![Build Status](https://drone.io/github.com/chuck211991/gitcentral/status.png)](https://drone.io/github.com/chuck211991/gitcentral/latest)
 [![Coverage Status](https://coveralls.io/repos/github/chuck211991/gitcentral/badge.svg?branch=master)](https://coveralls.io/github/chuck211991/gitcentral?branch=master)
+[![Documentation Status](https://readthedocs.org/projects/gitcentral/badge/?version=latest)](http://gitcentral.readthedocs.org/en/latest/?badge=latest)
 
 This projects aims to create an open-source implementation similiar to the very excellent Github.
 The need for this is justified merely by the success of Github, which has done a wonderful job of unifying communities and providing a central location for projects to store their codebase, documentation, and issues.
 However, despite facilitating open-source development, Github is not open-source.
+
+Documentation can be found here: http://gitcentral.readthedocs.org/en/latest/
 
 ## Current Features
 
