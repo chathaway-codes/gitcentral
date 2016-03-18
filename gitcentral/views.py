@@ -47,9 +47,7 @@ class RepoDetailView(DetailView):
 	    self.trees = []
 	    self.blobs = []
 	    self.branch = 'master'
-	    class T:
-	        path = ""
-	    self.current_tree = T()
+	    self.current_tree = ""
 	    return False
 	if 'branch' in self.request.GET:
   	    branch = self.request.GET['branch'] 
@@ -88,7 +86,7 @@ class RepoDetailView(DetailView):
             }]
 	self.blobs = blobs
 	self.trees = trees
-	self.current_tree = ttree
+	self.current_tree = ttree.path
 	return False
 
     def get(self, request, *args, **kwargs):
@@ -108,7 +106,7 @@ class RepoDetailView(DetailView):
 	context['branch'] = self.branch
 	breadcrumbs = []
 	current_path = ""
-	for p in self.current_tree.path.split("/"):
+	for p in self.current_tree.split("/"):
 	    if p == "":
 	        continue
 	    current_path = os.path.join(current_path, p)

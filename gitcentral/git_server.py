@@ -39,9 +39,14 @@ class GitRealm:
 
 class GitSession(SSHSessionForUnixConchUser):
     def execCommand(self, proto, cmd):
-        shell = '/usr/bin/git-shell'
+        shell = '/usr/local/bin/git-shell'
 	cmd, path = can_run_command(User.objects.get(username=self.avatar.username), cmd)
+        if cmd == 'git-receive-pack':
+            cmd = "/usr/local/bin/git-receive-pack"
+        else:
+            cmd = "/usr/local/bin/git-upload-pack"
         command = (cmd, path)
+        print command
         peer = self.avatar.conn.transport.transport.getPeer()
         host = self.avatar.conn.transport.transport.getHost()
         if self.ptyTuple:
