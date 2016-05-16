@@ -5,3 +5,4 @@ gitpython
 pyasn1
 pycrypto
 Twisted
+cryptography
