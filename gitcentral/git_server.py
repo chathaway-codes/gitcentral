@@ -39,12 +39,12 @@ class GitRealm:
 
 class GitSession(SSHSessionForUnixConchUser):
     def execCommand(self, proto, cmd):
-        shell = '/usr/local/bin/git-shell'
+        shell = getattr(settings, "GIT_SHELL_PATH", "/usr/local/bin/git-shell")
 	cmd, path = can_run_command(User.objects.get(username=self.avatar.username), cmd)
         if cmd == 'git-receive-pack':
-            cmd = "/usr/local/bin/git-receive-pack"
+            cmd = getattr(settings, "GIT_RECEIVE_PACK", "/usr/local/bin/git-shell")
         else:
-            cmd = "/usr/local/bin/git-upload-pack"
+            cmd = getattr(settings, "GIT_UPLOAD_PACK", "/usr/local/bin/git-shell")
         command = (cmd, path)
         print command
         peer = self.avatar.conn.transport.transport.getPeer()
