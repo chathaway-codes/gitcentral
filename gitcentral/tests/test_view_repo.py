@@ -15,12 +15,15 @@ class RepoViewTestCases(TestCase):
 	    Repo.objects.create(name="This is my private repo", owner=cls.test_user, public=False),
 	    Repo.objects.create(name="This is my repo with commits", owner=cls.test_user),
 	    Repo.objects.create(name="This is my private repo with commits", owner=cls.test_user),
+	    Repo.objects.create(name="Repo without master branch", owner=cls.test_user),
 	]
 
 	cls.repos[2].path = "test_repo1"
 	cls.repos[2].save()
 	cls.repos[3].path = "test_repo2"
 	cls.repos[3].save()
+	cls.repos[4].path = "test_repo_non_master_branch"
+	cls.repos[4].save()
 
     def test_repo_detail_view(self):
         self.client.get(reverse('repo-detail', kwargs={
@@ -99,3 +102,8 @@ class RepoViewTestCases(TestCase):
     def test_repo_admin_view_denied(self):
 	response = self.client.get(reverse('permission-list', kwargs={'pk': self.repos[0].pk}))
 	self.assertEqual(response.status_code, 403)
+
+    def test_repo_no_master_detail_view(self):
+        self.client.get(reverse('repo-detail', kwargs={
+	    "username": self.repos[0].owner.username, "path": self.repos[4].path,"dirfile": ""}))
+

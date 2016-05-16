@@ -53,7 +53,13 @@ class RepoDetailView(DetailView):
   	    branch = self.request.GET['branch'] 
 	else:
 	    branch = 'master'
-	self.branch = branch
+            if branch not in r.heads:
+                for b in r.heads:
+                    branch = str(b)
+                    break
+        if branch not in r.heads:
+            raise Http404("Branch not found")
+        self.branch = branch
         tree = r.heads[branch].commit.tree
         trees = []
         ttree = tree
