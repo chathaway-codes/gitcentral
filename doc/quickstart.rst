@@ -9,8 +9,9 @@ Quick Start
 Using as a new project
 **********************
 
-The following documents how to install Gitcentral in a stand-alone development environment;
-if you are preparing for deployment, you should change the database (see https://docs.djangoproject.com/en/1.9/ref/databases/ for more information).
+The following documents how to install Gitcentral in a stand-alone development environment.
+
+If you are preparing for deployment, you should change the database (see https://docs.djangoproject.com/en/1.9/ref/databases/ for more information).
 
 
 Install the system packages
@@ -22,7 +23,7 @@ Install the system packages
     sudo apt-get build-dep python-twisted
 
 These commands will install python-virtualenv, which allows us to use Python virtual environments for development, 
-and the build dependecies for python-twisted, which is used to contruct the restricted SSH server that is used to share Git repos.
+and the build dependencies for python-twisted, which is used to contruct the restricted SSH server that is used to share Git repos.
 
 Strictly speaking, you do not need python-virtualenv.
 However, it helps keep the build environment clean from interactions with other projects, which sometimes causes unforeseen problems.
@@ -71,6 +72,7 @@ This section does not cover using a database other than SQLite, which is documen
     python manage.py createsuperuser
 
 And you're off!
+
 The second command launches a script which creates a super user who will have access to the backend (http://localhost:8000/admin) in addition to the front end.
 Although this user shouldn't be needed, it is not a bad idea to have him as a backup.
 
