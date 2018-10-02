@@ -8,6 +8,7 @@ local_settings.py
 python/
 coverage/
 htmlcov/
+doc/_build/
 
 repos/*
 !repos/test_data/test_repo1/
